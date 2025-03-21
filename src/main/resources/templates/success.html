@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful - Black Panthers Cricket Team</title>
+    <link rel="stylesheet" th:href="@{/css/success.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="/images/black-panther-bg.jpg" alt="Black Panthers Logo" class="logo">
+                <h1>Black Panthers Cricket Team</h1>
+            </div>
+            <p class="tagline">Join the elite. Dominate the field.</p>
+        </header>
+        
+        <div class="success-container">
+            <div class="success-icon">✓</div>
+            <h2>Registration Successful!</h2>
+            
+            <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+            
+            <p class="success-message">
+                Thank you for registering with the Black Panthers Cricket Team. 
+                We're excited to have you join our team!
+            </p>
+            
+            <div class="success-details">
+                <p>A confirmation email has been sent to your registered email address with your registration details.</p>
+                <p>Please check your inbox (and spam folder) for the email containing your registration PDF.</p>
+            </div>
+            
+            <div class="next-steps">
+                <h3>Next Steps:</h3>
+                <ol>
+                    <li>Attend the orientation session (details in the email)</li>
+                    <li>Complete your membership payment</li>
+                    <li>Join our WhatsApp group for team updates</li>
+                </ol>
+            </div>
+            
+            <div class="button-container">
+                <a href="/" class="btn btn-primary">Return to Home</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 Black Panthers Cricket Team. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
+

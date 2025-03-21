@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Black Panthers Cricket Team</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        h1 {
+            color: #fff;
+            margin: 0;
+        }
+        h2 {
+            color: #000;
+        }
+        .button {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .note {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #000;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Black Panthers Cricket Team</h1>
+        </div>
+        
+        <div class="content">
+            <h2>Welcome to the Team, <span th:text="${name}">Player</span>!</h2>
+            
+            <p>Thank you for registering with the <strong th:text="${teamName}">Black Panthers</strong> Cricket Team. We are thrilled to have you join our family of passionate cricketers!</p>
+            
+            <p>Your registration has been successfully processed. Please find attached your registration confirmation PDF with all your details.</p>
+            
+            <div class="note">
+                <p><strong>Important Information:</strong></p>
+                <ul>
+                    <li>Orientation Session: Saturday, 15th December 2025, 10:00 AM</li>
+                    <li>Venue: Black Panthers Cricket Ground, Main Stadium,Nalla Veedhi</li>
+                    <li>Please bring your ID proof and a copy of this registration</li>
+                </ul>
+            </div>
+            
+            <p>If you have any questions or need assistance, please don't hesitate to contact our team at <a href="mailto:support@blackpanthers.com">support@blackpanthers.com</a> or call us at +1-234-567-8900.</p>
+            
+            <p>We look forward to seeing you on the field!</p>
+            
+            <p>Best regards,<br>
+            The Black Panthers Management Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 Black Panthers Cricket Team. All rights reserved.</p>
+            <p>This email was sent to you because you registered with the Black Panthers Cricket Team.</p>
+        </div>
+    </div>
+</body>
+</html>
+

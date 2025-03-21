@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Panthers Cricket Team - Registration</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="/images/black-panther-bg.jpg" alt="Black Panthers Logo" class="logo">
+                <h1>Black Panthers Cricket Team</h1>
+            </div>
+            <p class="tagline">Join the elite. Dominate the field.</p>
+        </header>
+
+        <div class="alert alert-error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+        <div class="registration-form">
+            <h2>Player Registration Form</h2>
+            
+            <form th:action="@{/register}" th:object="${cricketer}" method="post" enctype="multipart/form-data" id="registrationForm">
+                
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h3>Personal Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" th:field="*{name}" required>
+                        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dob">Date of Birth *</label>
+                        <input type="date" id="dob" th:field="*{dob}" required>
+                        <span class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" th:field="*{email}" required>
+                        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        <span class="error" id="emailError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" th:field="*{phone}" pattern="[0-9]{10}" required>
+                        <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address *</label>
+                        <textarea id="address" th:field="*{address}" rows="3" required></textarea>
+                        <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="photoFile">Player Photo</label>
+                        <input type="file" id="photoFile" name="photoFile" accept="image/*">
+                        <div class="photo-preview-container">
+                            <img id="photoPreview" src="#" alt="Photo Preview" style="display: none; max-width: 200px; max-height: 200px;">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cricket Information Section -->
+                <div class="form-section">
+                    <h3>Cricket Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="jerseyNumber">Jersey Number *</label>
+                        <input type="number" id="jerseyNumber" th:field="*{jerseyNumber}" min="1" max="99" required>
+                        <span class="error" th:if="${#fields.hasErrors('jerseyNumber')}" th:errors="*{jerseyNumber}"></span>
+                        <span class="error" id="jerseyNumberError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jerseySize">Jersey Size *</label>
+                        <select id="jerseySize" th:field="*{jerseySize}" required>
+                            <option value="">Select Size</option>
+                            <option th:each="size : ${jerseySizes}" th:value="${size}" th:text="${size}"></option>
+                        </select>
+                        <span class="error" th:if="${#fields.hasErrors('jerseySize')}" th:errors="*{jerseySize}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="playerType">Player Type *</label>
+                        <select id="playerType" th:field="*{playerType}" required>
+                            <option value="">Select Type</option>
+                            <option th:each="type : ${playerTypes}" th:value="${type}" th:text="${type.displayName}"></option>
+                        </select>
+                        <span class="error" th:if="${#fields.hasErrors('playerType')}" th:errors="*{playerType}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="battingStyle">Batting Style *</label>
+                        <select id="battingStyle" th:field="*{battingStyle}" required>
+                            <option value="">Select Style</option>
+                            <option th:each="style : ${battingStyles}" th:value="${style}" th:text="${style.displayName}"></option>
+                        </select>
+                        <span class="error" th:if="${#fields.hasErrors('battingStyle')}" th:errors="*{battingStyle}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bowlingStyle">Bowling Style *</label>
+                        <select id="bowlingStyle" th:field="*{bowlingStyle}" required>
+                            <option value="">Select Style</option>
+                            <option th:each="style : ${bowlingStyles}" th:value="${style}" th:text="${style.displayName}"></option>
+                        </select>
+                        <span class="error" th:if="${#fields.hasErrors('bowlingStyle')}" th:errors="*{bowlingStyle}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="yearsOfExperience">Years of Experience *</label>
+                        <input type="number" id="yearsOfExperience" th:field="*{yearsOfExperience}" min="0" max="50" required>
+                        <span class="error" th:if="${#fields.hasErrors('yearsOfExperience')}" th:errors="*{yearsOfExperience}"></span>
+                    </div>
+                </div>
+                
+                <!-- Emergency Contact Section -->
+                <div class="form-section">
+                    <h3>Emergency Contact</h3>
+                    
+                    <div class="form-group">
+                        <label for="emergencyContactName">Emergency Contact Name *</label>
+                        <input type="text" id="emergencyContactName" th:field="*{emergencyContactName}" required>
+                        <span class="error" th:if="${#fields.hasErrors('emergencyContactName')}" th:errors="*{emergencyContactName}"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emergencyContactPhone">Emergency Contact Phone *</label>
+                        <input type="tel" id="emergencyContactPhone" th:field="*{emergencyContactPhone}" pattern="[0-9]{10}" required>
+                        <span class="error" th:if="${#fields.hasErrors('emergencyContactPhone')}" th:errors="*{emergencyContactPhone}"></span>
+                    </div>
+                </div>
+                
+                <!-- Medical Information Section -->
+                <div class="form-section">
+                    <h3>Medical Information</h3>
+                    
+                    <div class="form-group">
+                        <label>Do you have any medical conditions we should be aware of?</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="hasMedicalCondition" th:field="*{hasMedicalCondition}" value="true"> Yes
+                            </label>
+                            <label>
+                                <input type="radio" name="hasMedicalCondition" th:field="*{hasMedicalCondition}" value="false"> No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="medicalDetailsGroup" style="display: none;">
+                        <label for="medicalDetails">Please provide details about your medical condition</label>
+                        <textarea id="medicalDetails" th:field="*{medicalDetails}" rows="3"></textarea>
+                        <span class="error" th:if="${#fields.hasErrors('medicalDetails')}" th:errors="*{medicalDetails}"></span>
+                    </div>
+                </div>
+                
+                <!-- Terms and Conditions -->
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="termsAgreed" required>
+                            I agree to the <a href="#" id="termsLink">terms and conditions</a> of the Black Panthers Cricket Team
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Terms and Conditions Modal -->
+        <div id="termsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Terms and Conditions</h2>
+                <div class="terms-content">
+                    <p>Welcome to the Black Panthers Cricket Team. By registering, you agree to the following terms:</p>
+                    <ol>
+                        <li>You will attend training sessions regularly.</li>
+                        <li>You will maintain good sportsmanship at all times.</li>
+                        <li>You will pay membership fees on time.</li>
+                        <li>You will take care of team equipment and jerseys.</li>
+                        <li>You will represent the team with pride and integrity.</li>
+                        <li>You allow us to use your photos for team promotional materials.</li>
+                        <li>You understand that cricket involves physical activity and risk of injury.</li>
+                    </ol>
+                </div>
+                <button id="acceptTerms" class="btn btn-primary">I Accept</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 Black Panthers Cricket Team. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            // Photo preview
+            $('#photoFile').change(function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#photoPreview').attr('src', e.target.result).show();
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Medical condition toggle
+            $('input[name="hasMedicalCondition"]').change(function() {
+                if ($(this).val() === 'true') {
+                    $('#medicalDetailsGroup').show();
+                    $('#medicalDetails').attr('required', true);
+                } else {
+                    $('#medicalDetailsGroup').hide();
+                    $('#medicalDetails').attr('required', false);
+                }
+            });
+            
+            // Terms and conditions modal
+            const modal = document.getElementById('termsModal');
+            const termsLink = document.getElementById('termsLink');
+            const closeBtn = document.getElementsByClassName('close')[0];
+            const acceptBtn = document.getElementById('acceptTerms');
+            
+            termsLink.onclick = function(e) {
+                e.preventDefault();
+                modal.style.display = 'block';
+            }
+            
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            }
+            
+            acceptBtn.onclick = function() {
+                document.getElementById('termsAgreed').checked = true;
+                modal.style.display = 'none';
+            }
+            
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+            
+            // Email validation
+            $('#email').blur(function() {
+                const email = $(this).val();
+                if (email) {
+                    $.get('/api/check-email', { email: email }, function(data) {
+                        if (data.exists) {
+                            $('#emailError').text('This email is already registered');
+                        } else {
+                            $('#emailError').text('');
+                        }
+                    });
+                }
+            });
+            
+            // Jersey number validation
+            /*$('#jerseyNumber').blur(function() {
+                const jerseyNumber = $(this).val();
+                if (jerseyNumber) {
+                    $.get('/api/check-jersey-number', { jerseyNumber: jerseyNumber }, function(data) {
+                        if (data.exists) {
+                            $('#jerseyNumberError').text('This jersey number is already taken');
+                        } else {
+                            $('#jerseyNumberError').text('');
+                        }
+                    });
+                }
+            });*/
+            
+            // Form validation
+            $('#registrationForm').submit(function(e) {
+                let isValid = true;
+                
+                // Clear previous errors
+                $('.error').text('');
+                
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const email = $('#email').val();
+                if (email && !emailRegex.test(email)) {
+                    $('#emailError').text('Please enter a valid email address');
+                    isValid = false;
+                }
+                
+                // Validate phone format
+                const phoneRegex = /^[0-9]{10}$/;
+                const phone = $('#phone').val();
+                if (phone && !phoneRegex.test(phone)) {
+                    $('[th-errors*="phone"]').text('Please enter a valid 10-digit phone number');
+                    isValid = false;
+                }
+                
+                // Check if terms are agreed
+                if (!$('#termsAgreed').is(':checked')) {
+                    e.preventDefault();
+                    alert('You must agree to the terms and conditions');
+                    isValid = false;
+                }
+                
+                return isValid;
+            });
+        });
+    </script>
+</body>
+</html>
+
